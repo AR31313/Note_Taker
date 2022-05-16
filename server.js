@@ -1,32 +1,35 @@
+let express = require("express")
+const app = express();
 //Activity 22
-const express = require('express');
 const path = require('path');
-const api = require('./routes/index.js');
+const api = require('./routes/index');
 
 const PORT = 3001;
 
-const app = express();
 
 // Middleware for parsing JSON and urlencoded form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 app.use('/api', api);
 
-app.use(express.static('public'));
 
-
-/// GET Route for homepage
-app.get("/index", (req, res) => {
-    console.log("Back to homepage")
-    res.sendFile(path.join(__dirname, "/public/index.html"))
-});
 
 // GET Route for Notes page
 app.get('/notes', (req, res) => {
     console.log("HIT")
-    res.sendFile(path.join(__dirname, '/public/notes.html'));
+    res.sendFile(path.join(__dirname, './public/notes.html'));
 
 });
+/// GET Route for homepage
+app.get("/", (req, res) => {
+    console.log("Back to homepage")
+    res.sendFile(path.join(__dirname, "/public/index.html"))
+});
+
+
+// app.post ('./ ')
+
 
 // bind and listen the connections on the specified host and port.
 app.listen(PORT, () =>
